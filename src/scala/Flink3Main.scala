@@ -1,7 +1,7 @@
 import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.api.common.functions.{AggregateFunction, MapFunction}
 import org.apache.flink.connector.jdbc.{JdbcConnectionOptions, JdbcExecutionOptions, JdbcSink, JdbcStatementBuilder}
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+import org.apache.flink.streaming.api.scala.{OutputTag, StreamExecutionEnvironment}
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.functions.ProcessFunction
@@ -34,11 +34,16 @@ object Flink3Main {
       new SerializableTimestampAssigner[Persion](){
         override def extractTimestamp(t: Persion, l: Long) = t.time
       }))
+    //测输出流
+    val outTag=new OutputTag[(String, Int)]("tag1")
     val ke = assigner.map(p => (p.name, 1))
       .keyBy(key =>true)
       .window(TumblingEventTimeWindows.of(Time.seconds(30),Time.seconds(10)))
+      .allowedLateness(Time.seconds(5))//迟到数据
+      .sideOutputLateData(outTag)
       .process(new MyProcessFunction)
-    ke.print
+      ke.print
+      ke.getSideOutput(outTag).print("侧输出流")
     env.execute
   }
 

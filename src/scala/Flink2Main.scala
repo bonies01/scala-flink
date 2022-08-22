@@ -35,6 +35,7 @@ object Flink2Main {
       //滑动窗口
       .window(SlidingEventTimeWindows.of(Time.seconds(30),Time.seconds(10)))
       .aggregate(new myAggregate)
+
     ke.print
     env.execute
   }

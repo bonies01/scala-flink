@@ -52,7 +52,7 @@ object FlinkMain {
 
 }
 
-case class Persion(name: String, age: Int)
+case class Persion(name: String, age: Int,opera:String,time:Long=System.currentTimeMillis())
 
 class MySourceFunction extends SourceFunction[Persion] {
   var running = true
@@ -60,9 +60,10 @@ class MySourceFunction extends SourceFunction[Persion] {
   override def run(sourceContext: SourceFunction.SourceContext[Persion]): Unit = {
     val random = new Random()
     var i = 0
+    val array=Array("create","pay","order","modify")
     while (running) {
       i = random.nextInt(10)
-      sourceContext.collect(Persion("per" + i, i))
+      sourceContext.collect(Persion("per" + i, i,array(i % 4)))
       TimeUnit.SECONDS.sleep(1)
     }
   }
