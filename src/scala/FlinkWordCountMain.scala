@@ -4,7 +4,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 
 import scala.util.Random
-case class Persion(name:String,age:Int)
+//case class Persion(name:String,age:Int)
 class MySource extends SourceFunction[Persion]{
   var running=true
   override def run(sourceContext: SourceFunction.SourceContext[Persion]): Unit = {
@@ -12,7 +12,7 @@ class MySource extends SourceFunction[Persion]{
     var i=0
     while(running){
       i=random.nextInt(10)
-      sourceContext.collect(Persion("n"+i,i))
+      sourceContext.collect(Persion("n"+i,i,""))
       TimeUnit.SECONDS.sleep(1)
     }
   }

@@ -55,7 +55,7 @@ object FlinkTopNMain {
         .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))//时间滚动窗口
         //.window(SlidingEventTimeWindows.of(Time.seconds(10),Time.seconds(5)))//事件时间滑动窗口
       //.window(SlidingProcessingTimeWindows.of(Time.seconds(10),Time.seconds(5)))//时间滑动窗口
-        .aggregate(new MyAggregatorFunction,new MyProcessFunction)
+        .aggregate(new MyAggregatorFunction,new MyProcessFunction1)
     ke.print
     env.execute
 
@@ -84,7 +84,7 @@ class MyAggregatorFunction extends AggregateFunction[Tuple2[String,Int],mutable.
   override def merge(acc: mutable.Map[String, Int], acc1: mutable.Map[String, Int]): mutable.Map[String, Int] = ???
 }
 
-class MyProcessFunction extends ProcessWindowFunction[ListBuffer[String],String,String,TimeWindow]{
+class MyProcessFunction1 extends ProcessWindowFunction[ListBuffer[String],String,String,TimeWindow]{
 
   override def process(key: String, context: Context, elements: Iterable[ListBuffer[String]], out: Collector[String]): Unit = {
      val list =elements.iterator.next

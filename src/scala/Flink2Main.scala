@@ -1,17 +1,11 @@
 import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.api.common.functions.{AggregateFunction, MapFunction}
-import org.apache.flink.connector.jdbc.{JdbcConnectionOptions, JdbcExecutionOptions, JdbcSink, JdbcStatementBuilder}
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.windowing.assigners.{SlidingEventTimeWindows, TumblingEventTimeWindows}
 import org.apache.flink.streaming.api.windowing.time.Time
-
-import java.sql.PreparedStatement
 import java.util
-import java.util.Random
-import java.util.concurrent.TimeUnit
-import scala.collection.mutable
+
 
 /**
  *

@@ -14,7 +14,7 @@ import org.apache.flink.util.Collector
  *
  * flink -dep
  */
-object FlinkCepMain {
+object FlinkCep2Main {
 
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment

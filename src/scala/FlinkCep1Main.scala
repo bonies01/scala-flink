@@ -27,10 +27,10 @@ object FlinkCep1Main {
 }
 
 class StateMachineMapper extends  RichFlatMapFunction[Persion,String]{
-  var state: ValueState[State]=null;
+ // var state: ValueState[State]=null;
   override def open(parameters: Configuration): Unit ={
 
-    state = getRuntimeContext.getState(new ValueStateDescriptor("persionState",State))
+   // state = getRuntimeContext.getState(new ValueStateDescriptor("persionState",State.))
   }
   override def flatMap(in: Persion, collector: Collector[String]): Unit = {
 
